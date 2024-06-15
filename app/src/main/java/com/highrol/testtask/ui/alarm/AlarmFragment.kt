@@ -10,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -42,6 +43,21 @@ class AlarmFragment : Fragment() {
 
         val toggleButton = view.findViewById<ToggleButton>(R.id.toggleButton)
         scaleOut = AnimationUtils.loadAnimation(context, R.anim.scale_animation)
+        val hours = listOf<String>("0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00",
+            "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00",
+            "20:00", "21:00", "22:00", "23:00")
+
+        val periods = listOf<String>("Every 1 h", "Every 2 h", "Every 3 h", "Every 4 h", "Every 5 h")
+        val autoCompleteFirst : AutoCompleteTextView = binding.autoCompleteFirst
+        val autoCompleteLast : AutoCompleteTextView = binding.autoCompleteLast
+        val autoCompletePeriod : AutoCompleteTextView = binding.autoCompletePeriod
+
+        val adapterHours = context?.let { ArrayAdapter(it, R.layout.dropdown_item, hours) }
+        val adapterPeriods = context?.let { ArrayAdapter(it, R.layout.dropdown_item, periods) }
+
+        autoCompleteFirst.setAdapter(adapterHours)
+        autoCompleteLast.setAdapter(adapterHours)
+        autoCompletePeriod.setAdapter(adapterPeriods)
 
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
